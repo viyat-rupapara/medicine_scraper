@@ -5,15 +5,6 @@ import json
 import streamlit as st
 import re
 
-# ---------- Configuration ----------
-# Streamlit configuration for deployment
-st.set_page_config(
-    page_title="Medicine Information Scraper",
-    page_icon="💊",
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
-
 # ---------- Headers ----------
 # Using a common user-agent to mimic a real browser
 HEADERS = {
@@ -21,11 +12,6 @@ HEADERS = {
                   "AppleWebKit/537.36 (KHTML, like Gecko) "
                   "Chrome/113.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-    "Accept-Encoding": "gzip, deflate, br",
-    "DNT": "1",
-    "Connection": "keep-alive",
-    "Upgrade-Insecure-Requests": "1",
 }
 
 # ---------- Search Helpers ----------
@@ -848,6 +834,7 @@ def scrape_product(url: str):
 
 
 # ---------- Streamlit UI ----------
+st.set_page_config(page_title="Medicine Scraper", page_icon="💊", layout="wide")
 st.title("💊 Medicine Data Scraper")
 st.markdown("Enter a medicine name. The tool will search on **Tata 1mg, Apollo Pharmacy, and Truemeds**, extract detailed information, and display it along with product photos.")
 
@@ -937,11 +924,7 @@ if product_name:
                     cols = st.columns(min(len(result_data["product_images"]), 5))
                     for idx, img_url in enumerate(result_data["product_images"][:5]):
                         with cols[idx]:
-                            try:
-                                st.image(img_url, caption=result_data.get("medicine_name"), use_container_width=True)
-                            except Exception as e:
-                                st.write(f"🖼️ Image {idx+1}: [View Image]({img_url})")
-                                st.caption("Image could not be displayed")
+                            st.image(img_url, caption=result_data.get("medicine_name"), width="content")
                 else:
                     st.write("No images found.")
                 
