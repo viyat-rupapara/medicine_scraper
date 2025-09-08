@@ -5,6 +5,15 @@ import json
 import streamlit as st
 import re
 
+# ---------- Configuration ----------
+# Streamlit configuration for deployment
+st.set_page_config(
+    page_title="Medicine Information Scraper",
+    page_icon="💊",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+
 # ---------- Headers ----------
 # Using a common user-agent to mimic a real browser
 HEADERS = {
@@ -12,6 +21,11 @@ HEADERS = {
                   "AppleWebKit/537.36 (KHTML, like Gecko) "
                   "Chrome/113.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Encoding": "gzip, deflate, br",
+    "DNT": "1",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
 }
 
 # ---------- Search Helpers ----------
@@ -924,7 +938,11 @@ if product_name:
                     cols = st.columns(min(len(result_data["product_images"]), 5))
                     for idx, img_url in enumerate(result_data["product_images"][:5]):
                         with cols[idx]:
-                            st.image(img_url, caption=result_data.get("medicine_name"), width="content")
+                            try:
+                                st.image(img_url, caption=result_data.get("medicine_name"), use_container_width=True)
+                            except Exception as e:
+                                st.write(f"🖼️ Image {idx+1}: [View Image]({img_url})")
+                                st.caption("Image could not be displayed")
                 else:
                     st.write("No images found.")
                 
@@ -939,3 +957,19 @@ if product_name:
             file_name=f"{product_name.replace(' ', '_')}_data.json",
             mime="application/json",
         )
+
+
+# ---------- Main App Execution ----------
+def main():
+    """Main function to run the Streamlit app with error handling."""
+    try:
+        # Run the main app logic above
+        pass
+    except Exception as e:
+        st.error("⚠️ An unexpected error occurred")
+        st.error(f"Error details: {str(e)}")
+        st.info("Please try refreshing the page or contact support if the issue persists.")
+
+# For Streamlit Cloud deployment
+if __name__ == "__main__":
+    main()
