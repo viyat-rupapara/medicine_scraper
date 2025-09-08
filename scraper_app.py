@@ -924,7 +924,7 @@ if product_name:
                     cols = st.columns(min(len(result_data["product_images"]), 5))
                     for idx, img_url in enumerate(result_data["product_images"][:5]):
                         with cols[idx]:
-                            st.image(img_url, caption=result_data.get("medicine_name"), width="content")
+                            st.image(img_url, caption=result_data.get("medicine_name"), width='stretch')
                 else:
                     st.write("No images found.")
                 
