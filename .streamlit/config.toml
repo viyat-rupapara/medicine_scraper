@@ -12,8 +12,3 @@ maxUploadSize = 200
 
 [browser]
 gatherUsageStats = false
-
-[client]
-caching = true
-displayEnabled = true
-showErrorDetails = true

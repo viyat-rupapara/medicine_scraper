@@ -848,7 +848,6 @@ def scrape_product(url: str):
 
 
 # ---------- Streamlit UI ----------
-st.set_page_config(page_title="Medicine Scraper", page_icon="💊", layout="wide")
 st.title("💊 Medicine Data Scraper")
 st.markdown("Enter a medicine name. The tool will search on **Tata 1mg, Apollo Pharmacy, and Truemeds**, extract detailed information, and display it along with product photos.")
 
@@ -957,19 +956,3 @@ if product_name:
             file_name=f"{product_name.replace(' ', '_')}_data.json",
             mime="application/json",
         )
-
-
-# ---------- Main App Execution ----------
-def main():
-    """Main function to run the Streamlit app with error handling."""
-    try:
-        # Run the main app logic above
-        pass
-    except Exception as e:
-        st.error("⚠️ An unexpected error occurred")
-        st.error(f"Error details: {str(e)}")
-        st.info("Please try refreshing the page or contact support if the issue persists.")
-
-# For Streamlit Cloud deployment
-if __name__ == "__main__":
-    main()
